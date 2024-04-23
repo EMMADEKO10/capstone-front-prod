@@ -1,21 +1,14 @@
 
 import SideBar from "../components/SideBar"
-import Interrogation from "../components/interrogation"
+// import Interrogation from "../components/interrogation"
 import Information from "../components/Information"
 import Rubrique from "../components/Rubrique"
-// import { useState } from "react"
-// import { v4 as uuidv4 } from 'uuid';
+import { useParams } from 'react-router-dom';
 import { createContext } from "react"
 
 export const RubriqueContext = createContext(null);
 export default function Cours() {
-    // StudentCoachList
-    // const [isHomeOpen, setIsHomeOpen] = useState(false);
-    // const [isAboutOpen, setIsAboutOpen] = useState(false);
-    // const [isSignInOpen, setIsSignInOpen] = useState(false);
-    // const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-    // setIsHomeOpen(true)
-
+    const { id } = useParams(); // Extraction de l'id des paramètres d'URL
 
     return (
         <> 
@@ -43,7 +36,6 @@ export default function Cours() {
 
             <div className='flex flex-row gap-2'>
                 <SideBar />
-                {/* <RubriqueContext.Provider value={{ isHomeOpen, setIsHomeOpen }} key={uuidv4()}> */}
                     <div className="flex flex-col gap-2 lg:w-[90%] mr-3">
                         <Rubrique />
                       <div><div className="cours mt-4 relative lg:w-[90%] rounded-2xl mb-1 shadow-md h-40 lg:mr-10 text-center items-center pl-20 pb-20">
@@ -51,15 +43,10 @@ export default function Cours() {
                                 <p className="font-sans font-semibold leading-normal text-gray-500 text-[32px]">Anglais</p>
                             </div>
                         </div>
-                            <Information />
-                            <Information />
-                            <Information />
-                            <Information />
-                            <Interrogation  />
+                        <Information courseId={id} />
+                            {/* <Interrogation  /> */}
                             </div>
-                            {/* ) : <StudentCoachList2 /> }  */}
                     </div>
-                {/* </RubriqueContext.Provider> */}
             </div>
         </>
     )

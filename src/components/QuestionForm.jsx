@@ -1,5 +1,5 @@
 import { useState } from 'react';
-
+// import { RubriqueContext } from '../pages/Traveaux';
 const QuestionForm = () => {
     const [questions, setQuestions] = useState([]);
     const [formData, setFormData] = useState({
@@ -8,7 +8,6 @@ const QuestionForm = () => {
         choices: [''], // Pour les choix multiples
         isMultiple: false, // Pour indiquer si la question est à choix multiples
     });
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -16,7 +15,6 @@ const QuestionForm = () => {
             [name]: value,
         }));
     };
-
     const handleChoicesChange = (e, index) => {
         const newChoices = [...formData.choices];
         newChoices[index] = e.target.value;
@@ -25,7 +23,6 @@ const QuestionForm = () => {
             choices: newChoices,
         }));
     };
-
     const handleAddChoice = () => {
         setFormData((prevData) => ({
             ...prevData,
@@ -42,10 +39,8 @@ const QuestionForm = () => {
             choices: [''],
             isMultiple: false,
         });
-        console.log("voici les questions : ", questions[0])
+        console.log('Voici les choix',formData.choices)
     };
-
-   
 
     return (
         <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -83,8 +78,6 @@ const QuestionForm = () => {
                                     </div>
                                 )}
 
-
-                
                 <div className="flex items-center">
                     <input type="checkbox" id="isMultiple" name="isMultiple" checked={formData.isMultiple} onChange={handleChange} className="mr-2" />
                     <label htmlFor="isMultiple" className="text-sm font-semibold text-gray-700">Autoriser plusieurs choix</label>
@@ -126,7 +119,6 @@ const QuestionForm = () => {
         </div>
     );
 };
-
 export default QuestionForm;
 
 

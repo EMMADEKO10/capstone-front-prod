@@ -1,3 +1,3 @@
 import { createContext } from "react";
 
-export const rubriqueContext = createContext(null);
+export const RubriqueContext = createContext(null);
