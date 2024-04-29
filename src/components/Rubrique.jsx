@@ -5,6 +5,7 @@
 import { NavLink } from 'react-router-dom';
 
 export default function Rubrique() {
+    const currentCours = JSON.parse(sessionStorage.getItem('currentCours'));
 
     // const [showAddButton, setShowAddButton] = useState(false);
     // const { isHomeOpen, setIsHomeOpen } = useContext(RubriqueContext)
@@ -21,7 +22,7 @@ export default function Rubrique() {
                     <div className=" sm:items-center">
                         <div className="flex justify-center lg:space-x-4 text-sm text-slate-700">
                             <ul className='flex lg:space-x-4 list-none'>
-                                <NavLink to="/Cours"><li href="#" className="ease-nav-brand hover:text-purple-400 px-3 py-2 rounded-md">Flux</li></NavLink> 
+                                <NavLink to={`/Cours/${currentCours}`}><li href="#" className="ease-nav-brand hover:text-purple-400 px-3 py-2 rounded-md">Flux</li></NavLink> 
                                 <NavLink to="/Travaux"><li href="#" className="hover:text-purple-400 px-3 py-2 rounded-md">Travaux et Devoirs</li></NavLink>
                                 <NavLink to="/All"><li href="#" className="hover:text-purple-400 px-3 py-2 rounded-md">Personne</li></NavLink>
                                 <NavLink to="/Stat"><li href="#" className=" hover:text-purple-400 px-3 py-2 rounded-md">Note</li></NavLink>

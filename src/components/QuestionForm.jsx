@@ -1,15 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 // import { RubriqueContext } from '../pages/Traveaux';
+// import { RubriqueContext } from '../pages/AddEpreuves';
 const QuestionForm = () => {
+   
     const [questions, setQuestions] = useState([]);
+     const currentEpreuve = JSON.parse(sessionStorage.getItem('epreuve'));
+    const epreuveId = currentEpreuve
+    console.log("VOICI LES currentEpreuve : ", currentEpreuve )
 
     const [formData, setFormData] = useState({
         title: '',
         type: 'choice',
         choices: [''], // Pour les choix multiples
         isMultiple: false, // Pour indiquer si la question est à choix multiples
-        epreuveId: 1,
+        // epreuveId:1,
+        // epreuveId: currentEpreuve,
         marks:5
     });
     const handleChange = (e) => {
@@ -33,15 +39,23 @@ const QuestionForm = () => {
             choices: [...prevData.choices, ''],
         }));
     };
+    // console.log('èèèèèèèèè + --- + uuuuuuuu :', epreuveId);
+
+    const { title, type,  marks } = formData
+useEffect(() =>{
+    console.log('------- + -------- + ----------- :', epreuveId);
+}, [epreuveId])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('formData question:', formData.choices);
 
-        const { title, type, epreuveId, marks } = formData
+        // console.log('formData question:', formData.choices);
+        console.log('AAAAAA + ZZZZZZZZ + SSSSSSSSSSS :', epreuveId);
+
         try {
             const response = await axios.post('http://localhost:3000/api/question/add', { title, type, epreuveId, marks });
-            console.log(response.data); // Utilisez la réponse de l'API comme vous le souhaitez
+            sessionStorage.setItem("question", JSON.stringify(response.data.data.id));
+
             setQuestions((prevQuestions) => [...prevQuestions, formData]);
             // Réinitialisez le formulaire après l'envoi réussi si nécessaire
 
@@ -68,7 +82,13 @@ const QuestionForm = () => {
         //         }
             
         // }
+        
+        const currentQuestion = JSON.parse(sessionStorage.getItem('question'));
 
+        console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA currentQuestion ", currentQuestion); 
+
+
+        console.log("currentQuestion AAAAAAAA ", currentQuestion)
         for (const choice of formData.choices) {
             try {
             const choiceResponse = await axios.post('http://localhost:3000/api/assertion/add', {
@@ -76,7 +96,7 @@ const QuestionForm = () => {
                 description: "Ceci est la première rubrique d'assertion pour un test",
                 content: "Contenu de la première rubrique d'assertion",
                 isCorrect: false,
-                questionId: formData.epreuveId, // Utilisez l'ID de la question
+                questionId: currentQuestion, // Utilisez l'ID de la question
             });
                 console.log(choiceResponse.data);
             } catch (error) {
@@ -131,6 +151,7 @@ const QuestionForm = () => {
                 </div>
                 <button type="submit" className="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded-md shadow-md mt-4">Créer la question</button>
             </form>
+
             {/* Section pour afficher les questions */}
             <div className="mt-8">
                 <h3 className="text-lg font-bold mb-4">Questions créées</h3>

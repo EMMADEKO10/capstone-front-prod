@@ -77,6 +77,10 @@ import { useState, useEffect } from 'react';
 // import { RubriqueContext } from '../pages/Traveaux';
 const ExamForm = () => {
 
+    const currentCours = JSON.parse(sessionStorage.getItem('currentCours'));
+
+    console.log("Voici le currentUser : ", currentCours)
+
     const [examData, setExamData] = useState({
         title: '',
         created_at: '',
@@ -87,7 +91,7 @@ const ExamForm = () => {
         total_marks: 100,
         created_by: 1,
         updated_at: "2024-04-25T12:00:00.000Z",
-        idCours: 2
+        idCours: parseInt(currentCours)
     });
     const [objectData, setObjectData] = useState({});
     const handleExamChange = (e) => {
@@ -103,7 +107,9 @@ const ExamForm = () => {
         setObjectData({ ...examData });
         try {
             const response = await axios.post('http://localhost:3000/api/cours/epreuve/add', examData);
-            console.log("quel est la reponse : ", response.data); 
+            console.log("quel est la reponse EEEEEEEEEEEEEE : ", response.data.epreuve.id); 
+            sessionStorage.setItem("epreuve", JSON.stringify(response.data.epreuve.id));
+
         } catch (error) {
             console.error('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.', error);
         }
@@ -131,6 +137,7 @@ const ExamForm = () => {
                 </div>
                 <button type="submit" className="bg-purple-700 hover:bg-purple-800 text-white px-4 py-2 rounded-md shadow-md">Enregistrer</button>
             </form>
+
             {/* Formulaire de création de questions */}
             {/* <QuestionForm onSubmit={handleQuestionsSubmit} /> */}
         </div>

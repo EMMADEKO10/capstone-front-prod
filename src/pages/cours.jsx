@@ -4,11 +4,54 @@ import SideBar from "../components/SideBar"
 import Information from "../components/Information"
 import Rubrique from "../components/Rubrique"
 import { useParams } from 'react-router-dom';
-import { createContext } from "react"
+import { createContext,useEffect,useState } from "react"
+import axios from "axios";
+import Loading from 'react-loading';
+// import PropTypes from 'prop-types';
+// import { v4 as uuidv4 } from 'uuid';
+// import Dashboard from "../components/DashBoard";
 
 export const RubriqueContext = createContext(null);
 export default function Cours() {
     const { id } = useParams(); // Extraction de l'id des paramètres d'URL
+    
+    sessionStorage.setItem("currentCours", JSON.stringify(id));
+
+    const [DataInit, setDataInit] = useState(null)
+    const [Data, setData] = useState(null)
+    // console.log(courseId)
+    useEffect(() => {
+        const fetchData = async () => {
+
+            try {
+                const response = await axios.get(
+                    `http://localhost:3000/api/cours/${id}`
+                );
+                // Extraire les épreuves de response.data
+                const epreuves = response.data;
+
+                // Mettre à jour dataUser en ajoutant les épreuves
+                setDataInit(epreuves);
+
+                setData(response.data);
+            } catch (error) {
+                console.error("Error fetching tweets:", error);
+            }
+        };
+        fetchData(); // Call the function to fetch data
+    }, [id], [Data]);
+
+    useEffect(() => {
+        // console.log("Voici les données des cours : ", DataInit)
+    }, [DataInit], []);
+
+    if (!DataInit) {
+        return (
+            <div className="timeline flex justify-center items-center w-[650px]">
+                <Loading type="spin" color="#004a99" height={50} width={50} />
+            </div>
+        );
+    }
 
     return (
         <> 
@@ -43,10 +86,12 @@ export default function Cours() {
                                 <p className="font-sans font-semibold leading-normal text-gray-500 text-[32px]">Anglais</p>
                             </div>
                         </div>
-                        <Information courseId={id} />
+                        <Information  />
                             {/* <Interrogation  /> */}
+                     {/* <Dashboard />  */}
                             </div>
                     </div>
+                
             </div>
         </>
     )
@@ -241,8 +286,10 @@ export const StudentCoachList2 = () => {
                     </div>
                 ))}
             </div>
+            
         </div>
     );
 };
+
 
 

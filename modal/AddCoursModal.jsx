@@ -1,28 +1,31 @@
-import { useState,useContext, useEffect } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import axios from 'axios';
 import { DataContext } from '../src/App';
+
+
 const AddCourseModal = () => {
     const utilisateurStocke = JSON.parse(sessionStorage.getItem('utilisateur'));
     const [dt, setDt] = useState(null)
     const { dataUser } = useContext(DataContext)
 
-    useEffect(() => {
-        console.log("utilisateurStocke : ", utilisateurStocke.token);
-        console.log("utilisateurStocke : ", utilisateurStocke.user);
-    }, [utilisateurStocke]);
-    
+    // useEffect(() => {
+    //     console.log("utilisateurStocke : ", utilisateurStocke.token);
+    //     console.log("utilisateurStocke : ", utilisateurStocke.user);
+    // }, [utilisateurStocke.token, utilisateurStocke.user]);
+
     useEffect(() => {
         // console.log("id du user xxxxxxxxxxxxxxxxxx : ", dataUser.user)
 
-    },[ dataUser])
+    }, [dataUser])
 
     const [formData, setFormData] = useState({
         course_name: '',
         description: '',
         teacherId: utilisateurStocke.user.id, // Vous pouvez remplir cette valeur dynamiquement selon votre logique d'authentification
+        cours_id: ''
     });
 
-    
+
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -32,27 +35,25 @@ const AddCourseModal = () => {
         }));
     };
 
-    
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
-        // console.log("quel est la reponse : ", formData); // Réponse de votre backend
-        // dataUser.id
-        // console.log("id du user xxxxxxxxxxxxxxxxxx : ", dataUser.id)
+
+        const axiosInstance = axios.create({
+            baseURL: 'http://localhost:3000/api',
+            headers: {
+                Authorization: `Bearer ${utilisateurStocke.token}`,
+            },
+        });
         try {
 
-            const response = await axios.post('http://localhost:3000/api/cours/add', formData);
-            // console.log("quel est la reponse : ", response.data); // Réponse de votre backend
-            // Ajoutez ici la logique pour gérer la réponse de votre backend
+            const response = await axiosInstance.post('/cours/add', formData);
             setDt(response.data)
-            
+
         } catch (error) {
             console.error('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.', error);
         }
-     
-        // console.log("quel est la reponse : ", dt); // Réponse de votre backend
-
     };
 
     if (dt) {

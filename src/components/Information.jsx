@@ -5,19 +5,22 @@ import axios from "axios"
 import Loading from 'react-loading';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { NavLink } from "react-router-dom";
 
 
-export default function Information({ courseId }) {
+
+export default function Information() {
     // const { dataUser, setDataUser } = useContext(DataContext)
+    const currentCours = JSON.parse(sessionStorage.getItem('currentCours'));
     const [DataInit, setDataInit] = useState(null)
     const [Data, setData] = useState(null)
-    // console.log(courseId)
+    // console.log( currentCours)
     useEffect(() => {
         const fetchData = async () => {
 
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/api/cours/${courseId}`
+                    `http://localhost:3000/api/cours/${currentCours}`
                 );
                 // Extraire les épreuves de response.data
                 const epreuves = response.data;
@@ -31,7 +34,7 @@ export default function Information({ courseId }) {
             }
         };
         fetchData(); // Call the function to fetch data
-    }, [courseId], [Data]);
+    }, [currentCours], [Data]);
 
     useEffect(() => {
         // console.log("Voici les données des cours : ", DataInit)
@@ -48,6 +51,7 @@ export default function Information({ courseId }) {
         <>
             {DataInit.map((epreuve) => (
                 <div key={parseInt(uuidv4())} className="relative rounded-lg border border-gray-200 shadow-sm w-[100%] m-0">
+                    <NavLink to={`/epreuves/${epreuve.id}`}>
                     <div className="flex items-center gap-4 p-4">
                         <div>
                             <p className="font-medium text-gray-900 text-sm">{epreuve.title}</p>
@@ -58,6 +62,7 @@ export default function Information({ courseId }) {
                             </p>
                         </div>
                     </div>
+                    </NavLink>
                 </div>
             ))
             }

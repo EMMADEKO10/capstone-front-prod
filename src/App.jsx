@@ -14,6 +14,7 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { createContext } from "react"
 import Login from './pages/Login';
+import Dashboard from './components/DashBoard';
 
 export const DataContext = createContext(null);
 
@@ -36,6 +37,7 @@ function App() {
             <Route path='/All' element={<AllNote />} />
             <Route path='/Travaux' element={<AddEpreuves />} />
             <Route path='/Edit' element={<AjoutEpreuve />} />
+            <Route path='/epreuves/:id' element = {<Dashboard/>}></Route>
           </Routes>
         </BrowserRouter>
       </DataContext.Provider>
