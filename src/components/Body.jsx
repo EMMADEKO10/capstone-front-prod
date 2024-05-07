@@ -22,12 +22,12 @@ export default function Body() {
     return (
         <>
             <ThemeProvider theme={theme}>
-                <Container className="mt-1">
-                    <div className="null m-0">
+                {/* <Container className="mt-1"> */}
+                    <div className="flex flex-col gap-2 sm:w-[100%] w-full ">
 
                         {/* <!-- ------------------------------------------------------------------------------------------ --> */}
 
-                        <div className="w-[100%] px-6 py-6  text-slate-500 m-0">
+                        {/* <div className="w-[100%] px-6 py-6  text-slate-500 m-0"> */}
                             <Rubrique />
                             <TitleCours />
 
@@ -46,10 +46,10 @@ export default function Body() {
                             <button type="button" onClick={toggleTheme} className="inline-block px-6 py-3 mr-3 font-bold text-center uppercase align-middle transition-all bg-transparent border rounded-lg cursor-pointer border-fuchsia-500 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs text-fuchsia-500 mb-4">Button</button><input type="text" placeholder="Default input" className="focus:shadow-soft-primary-outline text-sm leading-5.6 ease-soft block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding px-3 py-2 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none mb-4" />
                             {/* -------------------------------------------------- */}
                             <button type="button" className="inline-block px-6 py-3 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-gradient-to-tl from-purple-700 to-pink-500 leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 hover:scale-102 active:opacity-85 hover:shadow-soft-xs mb-4">Button</button>
-                        </div>
+                        {/* </div> */}
                         <Footer />
                     </div>
-                </Container>
+                {/* </Container> */}
             </ThemeProvider>
         </>
     )

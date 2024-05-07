@@ -1,13 +1,15 @@
 import { useState } from "react"
 import styled, { ThemeProvider } from 'styled-components';
 import { lightTheme, darkTheme } from '../theme';
-
+import { Link } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   background-color: ${(props) => props.theme.backgroundColor};
   color: ${(props) => props.theme.primaryColor};
 `;
-export default function SideBar() {
+
+export default function SideBar({id}) {
     const [theme, setTheme] = useState(lightTheme);
 
     const toggleTheme = () => {
@@ -20,7 +22,6 @@ export default function SideBar() {
                 <Container>
                     <aside className=" hidden lg:flex sm:hidden ease-nav-brand z-990 inset-y-0 my-4 ml-4 mr-10 flex-wrap items-center justify-between overflow-y-auto rounded-2xl border-0 bg-white p-0 shadow-md duration-200 xl:left-0 xl:translate-x-0 xl:bg-transparent text-slate-500 sticky-sidebar" id="sidenav-main" data-sidebar="true" data-sidebar-value="null">
                         <div className="h-19.5">
-                            {/* <i className="absolute top-0 right-0 hidden p-4 opacity-50 cursor-pointer fas fa-times text-slate-400 xl:hidden" sidenav-close="" aria-hidden="true"></i> */}
                             <a onClick={toggleTheme} className="block px-8 py-6 m-0 text-sm whitespace-nowrap text-slate-700" href="javascript:;">
                                 <img src="https://demos.creative-tim.com/soft-ui-dashboard-tailwind/assets/img/logo-ct.png" className="inline h-full max-w-full transition-all duration-200 ease-nav-brand max-h-8" alt="main_logo" />
                                 <span className="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Soft ClassRoom SC</span>
@@ -46,7 +47,7 @@ export default function SideBar() {
                                                 </g>
                                             </svg>
                                         </div>
-                                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Dashboard</span>
+                                        <Link to="/home"><span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Home</span></Link>
                                     </a>
                                 </li>
                                 <li className="mt-0.5 w-full">
@@ -66,7 +67,7 @@ export default function SideBar() {
                                                 </g>
                                             </svg>
                                         </div>
-                                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Professeur</span>
+                                        <Link to="/All"><span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Professeur</span></Link>
                                     </a>
                                 </li>
                                 <li className="mt-0.5 w-full">
@@ -86,7 +87,7 @@ export default function SideBar() {
                                                 </g>
                                             </svg>
                                         </div>
-                                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Etudiant</span>
+                                        <Link to="/All"><span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Etudiant</span></Link>
                                     </a>
                                 </li>
                                 <li className="mt-0.5 w-full">
@@ -107,7 +108,7 @@ export default function SideBar() {
                                                 </g>
                                             </svg>
                                         </div>
-                                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Cours</span>
+                                        <Link to="/home"><span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Cours</span></Link>
                                     </a>
                                 </li>
                                 <li className="mt-0.5 w-full">
@@ -128,7 +129,9 @@ export default function SideBar() {
                                                 </g>
                                             </svg>
                                         </div>
-                                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Epreuves</span>
+                                        {id ? <Link to={`/cours/${id}`}><span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Epreuves</span></Link>:
+                                            <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Epreuves</span>
+                                        }
                                     </a>
                                 </li>
                                 <li className="w-full mt-4">
@@ -156,7 +159,7 @@ export default function SideBar() {
                                     </a>
                                 </li>
                                 <li className="mt-0.5 w-full">
-                                    <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="javascript:;">
+                                    <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" >
                                         <div className="shadow-md shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                                             <svg width="12px" height="12px" viewBox="0 0 40 44" version="1.1" xmlns="http://www.w3.org/2000/svg" >
                                                 <title>document</title>
@@ -172,11 +175,11 @@ export default function SideBar() {
                                                 </g>
                                             </svg>
                                         </div>
-                                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Sign In</span>
+                                        <Link to="/login"> <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Sign In</span></Link>
                                     </a>
                                 </li>
                                 <li className="mt-0.5 w-full">
-                                    <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" href="javascript:;">
+                                    <a className="py-2.7 text-sm ease-nav-brand my-0 mx-4 flex items-center whitespace-nowrap px-4 transition-colors" >
                                         <div className="shadow-md shadow-soft-2xl mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white bg-center stroke-0 text-center xl:p-2.5">
                                             <svg width="12px" height="20px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" >
                                                 <title>spaceship</title>
@@ -194,7 +197,7 @@ export default function SideBar() {
                                                 </g>
                                             </svg>
                                         </div>
-                                        <span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Sign Up</span>
+                                        <Link to="/register"><span className="ml-1 duration-300 opacity-100 pointer-events-none ease-soft">Sign Up</span></Link>
                                     </a>
                                 </li>
                             </ul>
@@ -205,3 +208,8 @@ export default function SideBar() {
         </>
     )
 }
+
+
+SideBar.propTypes = {
+    id: PropTypes.number.isRequired,
+};

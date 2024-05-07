@@ -53,19 +53,19 @@ export default function AffichageDesCours() {
                   <h2 className="text-lg font-semibold text-purple-600 mb-2">{`Examen : ${course.title}`}</h2>
                   <p className="text-gray-600">Description de la carte. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                   <div className="mt-2 flex justify-end">
-                      <button className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">Bouton</button>
+                      <button className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">Modifier</button>
                   </div>
               </div>
           </div>))}
 
 
 
-          <div className="w-[90%] h-30 bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
+          {/* <div className="w-[90%] h-30 bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition duration-300 ease-in-out">
               <div className="p-4">
                   <h2 className="text-lg font-semibold text-purple-700 mb-2">Titre de la carte</h2>
                   <p className="text-gray-600">Description de la carte. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
               </div>
-          </div>
+          </div> */}
 
 
     </>

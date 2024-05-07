@@ -1,25 +1,38 @@
 
 import SideBar from "../components/SideBar"
-// import Interrogation from "../components/interrogation"
 import Information from "../components/Information"
 import Rubrique from "../components/Rubrique"
 import { useParams } from 'react-router-dom';
-import { createContext,useEffect,useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import axios from "axios";
 import Loading from 'react-loading';
-// import PropTypes from 'prop-types';
-// import { v4 as uuidv4 } from 'uuid';
-// import Dashboard from "../components/DashBoard";
+
 
 export const RubriqueContext = createContext(null);
 export default function Cours() {
     const { id } = useParams(); // Extraction de l'id des paramètres d'URL
-    
-    sessionStorage.setItem("currentCours", JSON.stringify(id));
 
+    sessionStorage.setItem("currentCours", JSON.stringify(id));
+    const utilisateurStocke = JSON.parse(sessionStorage.getItem('utilisateur'));
+    const [isApprenant, setIsApprenant] = useState(false)
     const [DataInit, setDataInit] = useState(null)
     const [Data, setData] = useState(null)
-    // console.log(courseId)
+    
+    useEffect(() => {
+        const checkEnrollment = async () => {
+            try {
+                // http://localhost:3000/api/CourseEnrollment/1/1/isEnrolledAsProf
+                const response = await axios.get(`http://localhost:3000/api/CourseEnrollment/${utilisateurStocke.user.id}/${id}/isEnrolledAsProf`);
+                setIsApprenant(response.data.isEnrolled);
+                console.log("isApprenant : ", isApprenant)
+
+            } catch (error) {
+                console.error('Erreur lors de la vérification de l\'enrôlement :', error);
+            }
+        }
+        checkEnrollment();
+    });
+
     useEffect(() => {
         const fetchData = async () => {
 
@@ -54,44 +67,42 @@ export default function Cours() {
     }
 
     return (
-        <> 
-        <nav className="bg-white shadow-md">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between h-16">
-                    <div className="flex items-center">
-                        {/* Logo ou titre de votre site */}
-                        <span className="text-2xl font-bold text-fuchsia-800">MonSite</span>
-                    </div>
-                    <div className="hidden sm:flex items-center">
-                        {/* Liens de la NavBar */}
-                        <a href="#" className="px-3 py-2 text-sm text-green-500 hover:text-green-600">Home</a>
-                        <a href="#" className="px-3 py-2 text-sm text-green-500 hover:text-green-600">About Us</a>
-                        <a href="#" className="px-3 py-2 text-sm text-green-500 hover:text-green-600">Sign In</a>
-                        <a href="#" className="px-3 py-2 text-sm text-green-500 hover:text-green-600">Sign Up</a>
-                    </div>
-                    <div className="flex sm:hidden items-center">
-                        {/* Bouton de menu pour les écrans mobiles */}
-                        <button className="text-sm text-green-500 hover:text-green-600">Menu</button>
+        <>
+            <nav className="bg-white shadow-md">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between h-16">
+                        <div className="flex items-center">
+                            {/* Logo ou titre de votre site */}
+                            <span className="text-2xl font-bold text-fuchsia-800">School_Eva</span>
+                        </div>
+                        <div className="hidden sm:flex items-center">
+                            {/* Liens de la NavBar */}
+                            <a href="#" className="px-3 py-2 text-sm text-green-500 hover:text-green-600">Home</a>
+                            <a href="#" className="px-3 py-2 text-sm text-green-500 hover:text-green-600">About Us</a>
+                            <a href="#" className="px-3 py-2 text-sm text-green-500 hover:text-green-600">Sign In</a>
+                            <a href="#" className="px-3 py-2 text-sm text-green-500 hover:text-green-600">Sign Up</a>
+                        </div>
+                        <div className="flex sm:hidden items-center">
+                            {/* Bouton de menu pour les écrans mobiles */}
+                            <button className="text-sm text-green-500 hover:text-green-600">Menu</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </nav>
+            </nav>
 
             <div className='flex flex-row gap-2'>
-                <SideBar />
-                    <div className="flex flex-col gap-2 lg:w-[90%] mr-3">
-                        <Rubrique />
-                      <div><div className="cours mt-4 relative lg:w-[90%] rounded-2xl mb-1 shadow-md h-40 lg:mr-10 text-center items-center pl-20 pb-20">
-                            <div className="absolute bottom-0 left-0 mb-0 p-2">
-                                <p className="font-sans font-semibold leading-normal text-gray-500 text-[32px]">Anglais</p>
-                            </div>
+                <SideBar id={id}/>
+                <div className="flex flex-col gap-2 lg:w-[90%] mr-3">
+                    <Rubrique />
+                    <div><div className="cours mt-4 relative lg:w-[90%] rounded-2xl mb-1 shadow-md h-40 lg:mr-10 text-center items-center pl-20 pb-20">
+                        <div className="absolute bottom-0 left-0 mb-0 p-2">
+                            <p className="font-sans font-semibold leading-normal text-gray-500 text-[32px]">Anglais</p>
                         </div>
-                        <Information  />
-                            {/* <Interrogation  /> */}
-                     {/* <Dashboard />  */}
-                            </div>
                     </div>
-                
+                        <Information />
+                    </div>
+                </div>
+
             </div>
         </>
     )
@@ -100,146 +111,6 @@ export default function Cours() {
 
 
 // --------------------------------------
-
-
-// const NavBar = () => {
-//     const [isHomeOpen, setIsHomeOpen] = useState(false);
-//     const [isAboutOpen, setIsAboutOpen] = useState(false);
-//     const [isSignInOpen, setIsSignInOpen] = useState(false);
-//     const [isSignUpOpen, setIsSignUpOpen] = useState(false);
-
-//     const toggleHome = () => {
-//         setIsHomeOpen(!isHomeOpen);
-//     };
-
-//     const toggleAbout = () => {
-//         setIsAboutOpen(!isAboutOpen);
-//     };
-
-//     const toggleSignIn = () => {
-//         setIsSignInOpen(!isSignInOpen);
-//     };
-
-//     const toggleSignUp = () => {
-//         setIsSignUpOpen(!isSignUpOpen);
-//     };
-
-//     return (
-//         <nav className="bg-white shadow-sm">
-//             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-//                 <div className="flex justify-between h-16">
-//                     <div className="flex items-center">
-//                         {/* Logo ou titre de votre site */}
-//                         <span className="text-2xl font-bold text-fuchsia-800">MonSite</span>
-//                     </div>
-//                     {/* Liens de la NavBar */}
-//                     <div className="flex items-center space-x-4">
-//                         <button onClick={toggleHome} className="px-3 py-2 text-sm text-green-500 hover:text-green-600 focus:outline-none">
-//                             Home
-//                         </button>
-//                         {isHomeOpen && (
-//                             <ul className="absolute top-16 left-0 z-10 bg-white shadow-md p-2 rounded-lg">
-//                                 <li>
-//                                     <a href="#">bonjour</a>
-//                                 </li>
-//                                 <li>
-//                                     <a href="#">bonsoir</a>
-//                                 </li>
-//                                 <li>
-//                                     <a href="#">Succès</a>
-//                                 </li>
-//                             </ul>
-//                         )}
-//                         <button onClick={toggleAbout} className="px-3 py-2 text-sm text-green-500 hover:text-green-600 focus:outline-none">
-//                             About Us
-//                         </button>
-//                         {isAboutOpen && (
-//                             <ul className="absolute top-16 left-0 z-10 bg-white shadow-md p-2 rounded-lg">
-//                                 <li>
-//                                     <a href="#">Sous lien</a>
-//                                 </li>
-//                                 <li>
-//                                     <a href="#">Lien commercial</a>
-//                                 </li>
-//                             </ul>
-//                         )}
-//                         <button onClick={toggleSignIn} className="px-3 py-2 text-sm text-green-500 hover:text-green-600 focus:outline-none">
-//                             Sign In
-//                         </button>
-//                         {isSignInOpen && (
-//                             <ul className="absolute top-16 left-0 z-10 bg-white shadow-md p-2 rounded-lg">
-//                                 <li>
-//                                     <a href="#">Social</a>
-//                                 </li>
-//                             </ul>
-//                         )}
-//                         <button onClick={toggleSignUp} className="px-3 py-2 text-sm text-green-500 hover:text-green-600 focus:outline-none">
-//                             Sign Up
-//                         </button>
-//                         {isSignUpOpen && (
-//                             <ul className="absolute top-16 left-0 z-10 bg-white shadow-md p-2 rounded-lg">
-//                                 <li>
-//                                     <a href="#">Socio media</a>
-//                                 </li>
-//                                 <li>
-//                                     <a href="#">User</a>
-//                                 </li>
-//                                 <li>
-//                                     <a href="#">Admin</a>
-//                                 </li>
-//                             </ul>
-//                         )}
-//                     </div>
-//                 </div>
-//             </div>
-//         </nav>
-//     );
-// };
-
-
-
-
-
-// const StudentCoachList = () => {
-//     const students = [
-//         { id: 1, name: 'John Doe', email: 'johndoe@example.com', avatar: 'https://randomuser.me/api/portraits/men/1.jpg' },
-//         { id: 2, name: 'Jane Smith', email: 'janesmith@example.com', avatar: 'https://randomuser.me/api/portraits/women/2.jpg' },
-//         // Add more students as needed
-//     ];
-
-//     const coaches = [
-//         { id: 1, name: 'James Johnson', email: 'jamesjohnson@example.com', avatar: 'https://randomuser.me/api/portraits/men/3.jpg' },
-//         { id: 2, name: 'Emily Brown', email: 'emilybrown@example.com', avatar: 'https://randomuser.me/api/portraits/women/4.jpg' },
-//         // Add more coaches as needed
-//     ];
-
-//     return (
-//         <div className="bg-gray-100 p-8">
-//             <h1 className="text-2xl font-bold mb-4 text-center">Liste des Apprenants</h1>
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-//                 {students.map((student) => (
-//                     <div key={student.id} className="bg-white rounded-lg shadow-md p-4">
-//                         <img src={student.avatar} alt={student.name} className="w-24 h-24 mx-auto rounded-full mb-2" />
-//                         <h2 className="text-lg font-semibold mb-1">{student.name}</h2>
-//                         <p className="text-gray-500">{student.email}</p>
-//                     </div>
-//                 ))}
-//             </div>
-//             <h1 className="text-2xl font-bold mt-8 mb-4 text-center">Liste des Coachs</h1>
-//             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-//                 {coaches.map((coach) => (
-//                     <div key={coach.id} className="bg-white rounded-lg shadow-md p-4">
-//                         <img src={coach.avatar} alt={coach.name} className="w-24 h-24 mx-auto rounded-full mb-2" />
-//                         <h2 className="text-lg font-semibold mb-1">{coach.name}</h2>
-//                         <p className="text-gray-500">{coach.email}</p>
-//                     </div>
-//                 ))}
-//             </div>
-//         </div>
-//     );
-// };
-
-
 
 
 export const StudentCoachList2 = () => {
@@ -286,7 +157,7 @@ export const StudentCoachList2 = () => {
                     </div>
                 ))}
             </div>
-            
+
         </div>
     );
 };

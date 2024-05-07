@@ -25,7 +25,7 @@
 }
 
 .cours {
-  background-image: url("src/assets/banner-images/home-page-banner.png");
+  /* background-image: url("src/assets/banner-images/home-page-banner.png"); */
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;

@@ -100,7 +100,7 @@ const Dashboard = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:3000/epreuve/${id}/questions`);
-                console.log("Voici les données des questions quiz : ",response.data)
+                // console.log("Voici les données des questions quiz : ",response.data)
                 setQuestions(response.data);
 
             } catch (err) {
@@ -127,44 +127,11 @@ const Dashboard = () => {
     // };
 
     return (
-        <div className="bg-gray-100 min-h-screen">
-            <div className="max-w-6xl mx-auto py-8">
-                <h3 className="text-lg font-bold mb-4">Questions créées</h3>
-
-                {/* ----------------------------------------------------- */}
-
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {questions.map((q) => (
-                        <div key={q.id} className="bg-white rounded-lg shadow-md p-6">
-                            <h4 className="text-lg font-semibold mb-2">{q.title}</h4>
-                            <p>Description: {q.description}</p>
-                            <p>Type: {q.type}</p>
-                            {/* <p>Date de début: {q.start_date}</p>
-                            <p>Date de fin: {q.end_date}</p>
-                            <p>Total de points: {q.total_marks}</p>
-                            <p>Cours: {q.cours.course_name}</p> */}
-                            <ul>
-                                {q.assertionRubrics.map((assertion) => (
-                                    <li key={assertion.id} className="flex items-center">
-                                        <input
-                                            type='checkbox'
-                                            id={`assertion-${assertion.id}`}
-                                            name={`assertion-${assertion.id}`}
-                                            value={assertion.id}
-                                            // onChange={(e) => handleCheckboxChange(q.id, assertion.id, e.target.checked)}
-                                            className="form-checkbox h-5 w-5 text-blue-600"
-                                        />
-                                        <label htmlFor={`assertion-${assertion.id}`} className="ml-2">{assertion.content}</label>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ))}
-                </div>
-
-                {/* ---------------------------------------- */}
-            </div>
+        <div className="bg-white text-sm">
+            <div className=' text-center items-center mt-20'><h1 className=' text-xl'>Anglais Numero I</h1> </div>
             <DashboardDeux questions={questions} />
+            <DashboardDeuxs questions={questions} />
+
         </div>
     );
 };
@@ -204,9 +171,9 @@ const DashboardDeux = ({ questions }) => {
     };
 
     return (
-        <div className=" mx-auto">
+        <div className=" mx-20 mt-10">
             {questions.map(question => (
-                <div key={question.id} className="w-[80%] question-card mb-1 bg-white rounded-lg shadow-md p-6 transition-transform hover:-translate-y-1">
+                <div key={question.id} className="w-[100%] question-card mb-1 bg-white rounded-lg shadow-ms p-6 transition-transform hover:-translate-y-1">
                     <h3 className="question-title text-xl font-semibold">{question.title}</h3>
                     {question.assertionRubrics.map(assertion => (
                         <div key={assertion.id} className="assertion-item flex items-center space-x-4">
@@ -246,3 +213,94 @@ const DashboardDeux = ({ questions }) => {
 DashboardDeux.propTypes = {
     questions: PropTypes.array.isRequired, // Valider que 'questions' est un tableau requis
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const DashboardDeuxs = ({ questions }) => {
+    const [selectedOptions, setSelectedOptions] = useState({});
+
+    const handleCheckboxChange = (questionId, assertionId, isChecked) => {
+        setSelectedOptions(prevState => ({
+            ...prevState,
+            [questionId]: {
+                ...prevState[questionId],
+                [assertionId]: isChecked,
+            },
+        }));
+    };
+
+    const handleRadioChange = (questionId, assertionId) => {
+        setSelectedOptions(prevState => ({
+            ...prevState,
+            [questionId]: {
+                [assertionId]: true,
+            },
+        }));
+    };
+
+    const handleSubmit = async () => {
+
+        console.log("voici l'etat : ", selectedOptions)
+        try {
+            const response = await axios.post('http://localhost:3000/api/responses/add', selectedOptions);
+            console.log(response.data); // Traitez la réponse de l'API comme nécessaire
+        } catch (error) {
+            console.error('Erreur lors de la soumission des réponses :', error);
+        }
+    };
+
+    return (
+        <div className="mx-20 mt-10">
+            {questions.map(question => (
+                <div key={question.id} className="w-[100%] question-card mb-1 bg-white rounded-lg shadow-ms p-6 transition-transform hover:-translate-y-1">
+                    <h3 className="question-title text-xl font-semibold">{question.title}</h3>
+                    {question.assertionRubrics.map(assertion => (
+                        <div key={assertion.id} className="assertion-item flex items-center space-x-4">
+                            {question.type === 'choice' ? (
+                                <input
+                                    type="checkbox"
+                                    id={`question-${question.id}-assertion-${assertion.id}`}
+                                    checked={selectedOptions[question.id]?.[assertion.id] || false}
+                                    onChange={e => handleCheckboxChange(question.id, assertion.id, e.target.checked)}
+                                    className="form-checkbox text-rose-500 focus:ring-rose-500 h-4 w-4"
+                                />
+                            ) : (
+                                <input
+                                    type="radio"
+                                    id={`question-${question.id}-assertion-${assertion.id}`}
+                                    name={`question-${question.id}-radio`}
+                                    checked={selectedOptions[question.id]?.[assertion.id] || false}
+                                    onChange={() => handleRadioChange(question.id, assertion.id)}
+                                    className="form-radio text-rose-500 focus:ring-rose-500 h-4 w-4"
+                                />
+                            )}
+                            <label htmlFor={`question-${question.id}-assertion-${assertion.id}`} className="text-gray-800 hover:text-rose-500 cursor-pointer">
+                                {assertion.title}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            ))}
+            <button onClick={handleSubmit} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Soumettre</button>
+        </div>
+    );
+};
+
+// Valider les types de props avec PropTypes
+DashboardDeuxs.propTypes = {
+    questions: PropTypes.array.isRequired, // Valider que 'questions' est un tableau requis
+};
+
+

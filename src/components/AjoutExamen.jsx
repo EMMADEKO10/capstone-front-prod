@@ -71,11 +71,9 @@
 
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-// import { useState, useEffect, } from 'react';
-// import QuestionForm from './QuestionForm';
-// import { updateExamenDataAlls } from '../assets/js/loopple/Setter';
-// import { RubriqueContext } from '../pages/Traveaux';
-const ExamForm = () => {
+import PropTypes from 'prop-types';
+
+const ExamForm = ({ setAddQuestion }) => {
 
     const currentCours = JSON.parse(sessionStorage.getItem('currentCours'));
 
@@ -107,8 +105,9 @@ const ExamForm = () => {
         setObjectData({ ...examData });
         try {
             const response = await axios.post('http://localhost:3000/api/cours/epreuve/add', examData);
-            console.log("quel est la reponse EEEEEEEEEEEEEE : ", response.data.epreuve.id); 
+            console.log("quel est la reponse EEEEEEEEEEEEEE : ", response.data.epreuve.id);
             sessionStorage.setItem("epreuve", JSON.stringify(response.data.epreuve.id));
+            setAddQuestion(true)
 
         } catch (error) {
             console.error('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.', error);
@@ -117,10 +116,6 @@ const ExamForm = () => {
     useEffect(() => {
         // console.log('EXAMEN Copied:', objectData); // Log the copied objectData examenDataAll
     }, [objectData]);
-
-    // useEffect(() => {
-    //     console.log('EXAMEN Copied 2:', examenDataAll); // Log the copied objectData 
-    // }, [examenDataAll]);
 
     return (
         <div className="w-full mx-auto p-6 bg-white rounded-lg shadow-md">
@@ -142,6 +137,12 @@ const ExamForm = () => {
             {/* <QuestionForm onSubmit={handleQuestionsSubmit} /> */}
         </div>
     );
+};
+
+ExamForm.propTypes = {
+    // courseId: PropTypes.bool.isRequired,
+    setAddQuestion: PropTypes.func.isRequired,
+    // setSelectedCourseImage: PropTypes.func.isRequired,
 };
 
 export default ExamForm;

@@ -1,32 +1,48 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { DataContext } from '../src/App';
+import PropTypes from 'prop-types';
 
 
-const AddCourseModal = () => {
+
+const AddCourseModal = ({ setShowModal }) => {
     const utilisateurStocke = JSON.parse(sessionStorage.getItem('utilisateur'));
     const [dt, setDt] = useState(null)
-    const { dataUser } = useContext(DataContext)
+    const [usedImages, setUsedImages] = useState([]);
 
-    // useEffect(() => {
-    //     console.log("utilisateurStocke : ", utilisateurStocke.token);
-    //     console.log("utilisateurStocke : ", utilisateurStocke.user);
-    // }, [utilisateurStocke.token, utilisateurStocke.user]);
+    const  handleClickOnBtnCancel =()=>{
+        setShowModal(false)
+    }
 
-    useEffect(() => {
-        // console.log("id du user xxxxxxxxxxxxxxxxxx : ", dataUser.user)
+    const DefaultImages = [
+        "public/image/background_cours/Charity-cuate.png",
+        "public/image/background_cours / Designer(7).jpeg",
+        "public/image/background_cours/healthy food vs fast food-rafiki.png",
+        "public/image/background_cours/Designer(9).jpeg",
+        "public/image/background_cours/home-page-banner.png",
+        "public/image/background_cours/login-page-banner.png",
+        "public/image/background_cours/signup-page-banner.png"
+    ]
 
-    }, [dataUser])
+    const chooseRandomImage = () => {
+        const availableImages = DefaultImages.filter(image => !usedImages.includes(image));
+        if (availableImages.length === 0) {
+            // Toutes les images ont été utilisées, réinitialiser l'historique
+            setUsedImages([]);
+            return chooseRandomImage(); // Appeler récursivement pour éviter les boucles infinies
+        }
+        const randomIndex = Math.floor(Math.random() * availableImages.length);
+        const randomImage = availableImages[randomIndex];
+        setUsedImages([...usedImages, randomImage]);
+        return randomImage;
+    };
 
     const [formData, setFormData] = useState({
         course_name: '',
         description: '',
-        teacherId: utilisateurStocke.user.id, // Vous pouvez remplir cette valeur dynamiquement selon votre logique d'authentification
-        cours_id: ''
+        teacherId: utilisateurStocke.user.id,
+        background: ""
+
     });
-
-
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevState) => ({
@@ -34,7 +50,6 @@ const AddCourseModal = () => {
             [name]: value,
         }));
     };
-
 
 
     const handleSubmit = async (e) => {
@@ -47,9 +62,20 @@ const AddCourseModal = () => {
             },
         });
         try {
-
-            const response = await axiosInstance.post('/cours/add', formData);
+            const newFormData = {
+                ...formData,
+                background: chooseRandomImage() // Choisir une nouvelle image aléatoire
+            };
+            const response = await axiosInstance.post('/cours/add', newFormData);
             setDt(response.data)
+
+            setFormData({
+                course_name: '',
+                description: '',
+                teacherId: utilisateurStocke.user.id,
+                background: ""
+
+            })
 
         } catch (error) {
             console.error('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.', error);
@@ -61,6 +87,7 @@ const AddCourseModal = () => {
     }
 
     return (
+
         <div
             className={`fixed top-0 left-0 w-full h-full bg-gray-800 bg-opacity-50 flex justify-center items-center z-50 '
                 }`}
@@ -78,7 +105,7 @@ const AddCourseModal = () => {
                             name="course_name"
                             value={formData.course_name}
                             onChange={handleChange}
-                            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                            className="text-white bg-gradient-to-r from-purple-600 to-pink-600 text-justify pr-2 pt-3 pl-2 pb-3 h-[40px] mt-1 block w-full border-transparent shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                             required
                         />
                     </div>
@@ -97,10 +124,7 @@ const AddCourseModal = () => {
                         ></textarea>
                     </div>
                     <div className="flex justify-end">
-                        <button
-                            type="button"
-                            className="mr-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        >
+                        <button onClick={handleClickOnBtnCancel} type="button" className="mr-2 px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                             Annuler
                         </button>
                         <button
@@ -113,7 +137,16 @@ const AddCourseModal = () => {
                 </form>
             </div>
         </div>
+
     );
 };
+
+AddCourseModal.propTypes = {
+   
+    setShowModal: PropTypes.func.isRequired,
+   
+};
+
+
 
 export default AddCourseModal;

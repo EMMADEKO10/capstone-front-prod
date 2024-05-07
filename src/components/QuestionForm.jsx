@@ -39,7 +39,6 @@ const QuestionForm = () => {
             choices: [...prevData.choices, ''],
         }));
     };
-    // console.log('èèèèèèèèè + --- + uuuuuuuu :', epreuveId);
 
     const { title, type,  marks } = formData
 useEffect(() =>{
@@ -48,9 +47,6 @@ useEffect(() =>{
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // console.log('formData question:', formData.choices);
-        console.log('AAAAAA + ZZZZZZZZ + SSSSSSSSSSS :', epreuveId);
 
         try {
             const response = await axios.post('http://localhost:3000/api/question/add', { title, type, epreuveId, marks });
@@ -158,7 +154,7 @@ useEffect(() =>{
                 <ul className="divide-y divide-gray-200">
                     {questions.map((q, index) => (
                         <li key={index} className="py-2">
-                            <p className="font-semibold">{q.question}</p>
+                            <p className="font-semibold">{q.title}</p>
                             {q.type === 'choice' && (
                                 <ul className="ml-4">
                                     {q.choices.map((choice, i) => (

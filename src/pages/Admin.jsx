@@ -8,7 +8,7 @@ export default function Admin() {
                   <div className="flex justify-between h-16">
                       <div className="flex items-center">
                           {/* Logo ou titre de votre site */}
-                          <span className="text-2xl font-bold text-fuchsia-800 ">MonSite</span>
+                          <span className="text-2xl font-bold text-fuchsia-800 ">School_Eva</span>
                       </div>
                       <div className="flex items-center">
                           {/* Liens de la NavBar */}
