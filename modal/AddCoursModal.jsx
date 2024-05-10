@@ -64,7 +64,7 @@ const AddCourseModal = ({ setShowModal }) => {
         try {
             const newFormData = {
                 ...formData,
-                background: "public/image/background_cours/Charity-cuate.png" // Choisir une nouvelle image aléatoire
+                background: chooseRandomImage() // Choisir une nouvelle image aléatoire
             };
             const response = await axiosInstance.post('/cours/add', newFormData);
             setDt(response.data)
