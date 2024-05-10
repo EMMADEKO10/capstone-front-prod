@@ -21,8 +21,8 @@ export default function Cours() {
     useEffect(() => {
         const checkEnrollment = async () => {
             try {
-                // http://localhost:3000/api/CourseEnrollment/1/1/isEnrolledAsProf
-                const response = await axios.get(`http://localhost:3000/api/CourseEnrollment/${utilisateurStocke.user.id}/${id}/isEnrolledAsProf`);
+                //  https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/1/1/isEnrolledAsProf
+                const response = await axios.get(` https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/${utilisateurStocke.user.id}/${id}/isEnrolledAsProf`);
                 setIsApprenant(response.data.isEnrolled);
                 console.log("isApprenant : ", isApprenant)
 
@@ -38,7 +38,7 @@ export default function Cours() {
 
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/api/cours/${id}`
+                    ` https://capstone-c1-emmadeko10-3.onrender.com/api/cours/${id}`
                 );
                 // Extraire les épreuves de response.data
                 const epreuves = response.data;
@@ -93,7 +93,7 @@ export default function Cours() {
             <div className='flex flex-row gap-2'>
                 <SideBar id={id}/>
                 <div className="flex flex-col gap-2 lg:w-[90%] mr-3">
-                    <Rubrique />
+                   <Rubrique />
                     <div><div className="cours mt-4 relative lg:w-[90%] rounded-2xl mb-1 shadow-md h-40 lg:mr-10 text-center items-center pl-20 pb-20">
                         <div className="absolute bottom-0 left-0 mb-0 p-2">
                             <p className="font-sans font-semibold leading-normal text-gray-500 text-[32px]">Anglais</p>

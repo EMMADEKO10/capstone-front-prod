@@ -20,7 +20,7 @@ export default function Information() {
 
             try {
                 const response = await axios.get(
-                    `http://localhost:3000/api/cours/${currentCours}`
+                    ` https://capstone-c1-emmadeko10-3.onrender.com/api/cours/${currentCours}`
                 );
                 // Extraire les épreuves de response.data
                 const epreuves = response.data;

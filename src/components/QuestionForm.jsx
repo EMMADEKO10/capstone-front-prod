@@ -49,7 +49,7 @@ useEffect(() =>{
         e.preventDefault();
 
         try {
-            const response = await axios.post('http://localhost:3000/api/question/add', { title, type, epreuveId, marks });
+            const response = await axios.post(' https://capstone-c1-emmadeko10-3.onrender.com/api/question/add', { title, type, epreuveId, marks });
             sessionStorage.setItem("question", JSON.stringify(response.data.data.id));
 
             setQuestions((prevQuestions) => [...prevQuestions, formData]);
@@ -65,7 +65,7 @@ useEffect(() =>{
         // for(let i=0;i<formData.choices.length;i++){
         //     console.log(i);
         //         try {
-        //             const response = await axios.post('http://localhost:3000/api/assertion/add', { title, type, epreuveId, marks });
+        //             const response = await axios.post(' https://capstone-c1-emmadeko10-3.onrender.com/api/assertion/add', { title, type, epreuveId, marks });
         //             console.log(response.data); // Utilisez la réponse de l'API comme vous le souhaitez
         //             setQuestions((prevQuestions) => [...prevQuestions, formData]);
         //             // Réinitialisez le formulaire après l'envoi réussi si nécessaire
@@ -87,7 +87,7 @@ useEffect(() =>{
         console.log("currentQuestion AAAAAAAA ", currentQuestion)
         for (const choice of formData.choices) {
             try {
-            const choiceResponse = await axios.post('http://localhost:3000/api/assertion/add', {
+            const choiceResponse = await axios.post(' https://capstone-c1-emmadeko10-3.onrender.com/api/assertion/add', {
                 title: choice,
                 description: "Ceci est la première rubrique d'assertion pour un test",
                 content: "Contenu de la première rubrique d'assertion",

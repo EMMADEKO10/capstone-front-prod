@@ -99,7 +99,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/epreuve/${id}/questions`);
+                const response = await axios.get(` https://capstone-c1-emmadeko10-3.onrender.com/epreuve/${id}/questions`);
                 // console.log("Voici les données des questions quiz : ",response.data)
                 setQuestions(response.data);
 
@@ -254,7 +254,7 @@ const DashboardDeuxs = ({ questions }) => {
 
         console.log("voici l'etat : ", selectedOptions)
         try {
-            const response = await axios.post('http://localhost:3000/api/responses/add', selectedOptions);
+            const response = await axios.post(' https://capstone-c1-emmadeko10-3.onrender.com/api/responses/add', selectedOptions);
             console.log(response.data); // Traitez la réponse de l'API comme nécessaire
         } catch (error) {
             console.error('Erreur lors de la soumission des réponses :', error);

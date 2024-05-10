@@ -60,8 +60,11 @@ const RegisterForm = () => {
       console.log('Form data is valid:', formData); // Replace with your submission logic
     }
 
+
+    // https://capstone-c1-emmadeko10-3.onrender.com
+
     try {
-      const response = await axios.post('http://localhost:3000/api/auth/register', formData);
+      const response = await axios.post('https://capstone-c1-emmadeko10-3.onrender.com/api/auth/register', formData);
       // console.log(response.data); // Réponse de votre backend
       // Ajoutez ici la logique pour gérer la réponse de votre backend
       if (response.status === 201) { // Check for successful registration response

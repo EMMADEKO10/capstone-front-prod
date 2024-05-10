@@ -12,7 +12,7 @@ export default function Rubrique() {
     useEffect(() => {
         const checkEnrollment = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/CourseEnrollment/${utilisateurStocke.user.id}/${currentCours}/isEnrolledAsProf`);
+                const response = await axios.get(` https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/${utilisateurStocke.user.id}/${currentCours}/isEnrolledAsProf`);
                 setIsApprenant(response.data.isEnrolled);
                 console.log("isApprenant : ", isApprenant)
 

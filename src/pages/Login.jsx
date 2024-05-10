@@ -6,8 +6,13 @@ import { DataContext } from '../App';
 import { Link } from 'react-router-dom';
 // import { Redirect } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
+// import dotenv from 'dotenv';
 
-// https://capstone-c1-emmadeko10-2.onrender.com/api/auth/register/
+// Charger les variables d'environnement
+// dotenv.config();
+
+const apiUrl = import.meta.env.API_URL || ' https://capstone-c1-emmadeko10-3.onrender.com';
+
 
 function Login() {
     const { isLoggedIn, setIsLoggedIn } = useContext(DataContext)
@@ -33,11 +38,11 @@ function Login() {
 
         try {
 
-            const response = await axios.post('http://localhost:3000/api/auth/login', formData);
+            const response = await axios.post(`${apiUrl}/api/auth/login`, formData);
             setDataUser(response.data)
             let utilisateur = response.data
             sessionStorage.setItem("utilisateur", JSON.stringify(utilisateur));
-
+            console.log('response.Data : ', response.data)
             setIsLoggedIn(true)
         } catch (error) {
             console.error('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.', error);

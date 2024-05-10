@@ -56,15 +56,15 @@ const AddCourseModal = ({ setShowModal }) => {
         e.preventDefault();
 
         const axiosInstance = axios.create({
-            baseURL: 'http://localhost:3000/api',
-            headers: {
-                Authorization: `Bearer ${utilisateurStocke.token}`,
-            },
+            baseURL: 'https://capstone-c1-emmadeko10-3.onrender.com/api',
+            //  headers: {
+            //    Authorization: `Bearer ${utilisateurStocke.token}`,
+            // },
         });
         try {
             const newFormData = {
                 ...formData,
-                background: chooseRandomImage() // Choisir une nouvelle image aléatoire
+                background: "public/image/background_cours/Charity-cuate.png" // Choisir une nouvelle image aléatoire
             };
             const response = await axiosInstance.post('/cours/add', newFormData);
             setDt(response.data)

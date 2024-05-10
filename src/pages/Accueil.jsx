@@ -24,7 +24,7 @@ export default function Accueil() {
     const utilisateurStocke = JSON.parse(sessionStorage.getItem('utilisateur'));
 
     const axiosInstance = axios.create({
-        baseURL: 'http://localhost:3000/api',
+        baseURL: ' https://capstone-c1-emmadeko10-3.onrender.com/api',
         headers: {
             Authorization: `Bearer ${utilisateurStocke.token}`,
         },
@@ -55,7 +55,7 @@ export default function Accueil() {
         const checkEnrollment = async () => {
             try {
 
-                const response = await axios.get(`http://localhost:3000/api/CourseEnrollment/${utilisateurStocke.user.id}`);
+                const response = await axios.get(` https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/${utilisateurStocke.user.id}`);
 
                 setAllCourseUserEnrolled(response.data);
                 
@@ -275,7 +275,7 @@ const AjoutApprenantModal = ({ courseId, setModalIsOpen }) => {
         e.preventDefault();
         console.log(courseId)
         const axiosInstance = axios.create({
-            baseURL: 'http://localhost:3000/api',
+            baseURL: ' https://capstone-c1-emmadeko10-3.onrender.com/api',
             headers: {
                 Authorization: `Bearer ${utilisateurStocke.token}`,
             },

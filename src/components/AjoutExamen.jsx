@@ -104,7 +104,7 @@ const ExamForm = ({ setAddQuestion }) => {
 
         setObjectData({ ...examData });
         try {
-            const response = await axios.post('http://localhost:3000/api/cours/epreuve/add', examData);
+            const response = await axios.post(' https://capstone-c1-emmadeko10-3.onrender.com/api/cours/epreuve/add', examData);
             console.log("quel est la reponse EEEEEEEEEEEEEE : ", response.data.epreuve.id);
             sessionStorage.setItem("epreuve", JSON.stringify(response.data.epreuve.id));
             setAddQuestion(true)
