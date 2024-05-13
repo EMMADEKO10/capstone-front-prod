@@ -61,7 +61,7 @@ const RegisterForm = () => {
     }
 
 
-    // https://capstone-c1-emmadeko10-3.onrender.com
+    // http://localhost:3000
 
     try {
       const response = await axios.post('https://capstone-c1-emmadeko10-3.onrender.com/api/auth/register', formData);

@@ -21,8 +21,8 @@ export default function Cours() {
     useEffect(() => {
         const checkEnrollment = async () => {
             try {
-                //  https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/1/1/isEnrolledAsProf
-                const response = await axios.get(` https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/${utilisateurStocke.user.id}/${id}/isEnrolledAsProf`);
+                //  https://capstone-c1-emmadeko10-3.onrender.com/CourseEnrollment/1/1/isEnrolledAsProf
+                const response = await axios.get(`https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/${utilisateurStocke.user.id}/${id}/isEnrolledAsProf`);
                 setIsApprenant(response.data.isEnrolled);
                 console.log("isApprenant : ", isApprenant)
 

@@ -55,7 +55,7 @@ export default function Accueil() {
         const checkEnrollment = async () => {
             try {
 
-                const response = await axios.get(` https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/${utilisateurStocke.user.id}`);
+                const response = await axios.get(`https://capstone-c1-emmadeko10-3.onrender.com/api/CourseEnrollment/${utilisateurStocke.user.id}`);
 
                 setAllCourseUserEnrolled(response.data);
                 
@@ -84,7 +84,7 @@ export default function Accueil() {
                     <div className="flex flex-row flex-wrap gap-6">
                         {allCourseUserEnrolled.map((enrollment) => (
                             <div key={enrollment.Cours.course_id} className="mt-4 relative w-80 rounded-2xl mb-1 shadow-md h-60 mr-2 items-center pl-20 pb-20">
-                                <Link to={`http://localhost:5173/Cours/${enrollment.Cours.course_id}`}>
+                                <Link to={`/Cours/${enrollment.Cours.course_id}`}>
                                     {/* <div className="cours absolute w-[100%] h-[75%] top-0 right-0 left-0 rounded-2xl" style={{ backgroundImage: `url(${selectedCourseImage})` }}></div> */}
                                     <div className="cours absolute w-[100%] h-[75%] top-0 right-0 left-0 rounded-2xl" style={{ backgroundImage: `url(${enrollment.Cours.background})` }}></div>
                                     {/* <div className="cours absolute w-[100%] h-[75%] top-0 right-0 left-0 rounded-2xl" style={{ backgroundImage: `url("public/image/background_cours/home-page-banner-small.jpg")` }}></div> */}
@@ -275,7 +275,7 @@ const AjoutApprenantModal = ({ courseId, setModalIsOpen }) => {
         e.preventDefault();
         console.log(courseId)
         const axiosInstance = axios.create({
-            baseURL: ' https://capstone-c1-emmadeko10-3.onrender.com/api',
+            baseURL: ' https://capstone-c1-emmadeko10-3.onrender.com',
             headers: {
                 Authorization: `Bearer ${utilisateurStocke.token}`,
             },

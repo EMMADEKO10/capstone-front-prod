@@ -40,7 +40,7 @@ const AddCourseModal = ({ setShowModal }) => {
         course_name: '',
         description: '',
         teacherId: utilisateurStocke.user.id,
-        background: ""
+        // background: ""
 
     });
     const handleChange = (e) => {
@@ -64,7 +64,7 @@ const AddCourseModal = ({ setShowModal }) => {
         try {
             const newFormData = {
                 ...formData,
-                background: chooseRandomImage() // Choisir une nouvelle image aléatoire
+                // background: chooseRandomImage() // Choisir une nouvelle image aléatoire
             };
             const response = await axiosInstance.post('/cours/add', newFormData);
             setDt(response.data)
@@ -73,7 +73,7 @@ const AddCourseModal = ({ setShowModal }) => {
                 course_name: '',
                 description: '',
                 teacherId: utilisateurStocke.user.id,
-                background: ""
+                // background: ""
 
             })
 

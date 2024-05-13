@@ -1,17 +1,19 @@
 // RegisterForm.js
 
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import axios from 'axios'
 import { DataContext } from '../App';
 import { Link } from 'react-router-dom';
 // import { Redirect } from 'react-router-dom';
 import { Navigate } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom'; // Import de Redirect depuis react-router-dom
+
 // import dotenv from 'dotenv';
 
 // Charger les variables d'environnement
 // dotenv.config();
 
-const apiUrl = import.meta.env.API_URL || ' https://capstone-c1-emmadeko10-3.onrender.com';
+const apiUrl = "https://capstone-c1-emmadeko10-3.onrender.com";
 
 
 function Login() {
@@ -47,19 +49,15 @@ function Login() {
         } catch (error) {
             console.error('Une erreur s\'est produite lors de l\'inscription. Veuillez réessayer.', error);
         }
-        
+
     };
 
-    useEffect(() => {
-    }, [dataUser])
+        if (isLoggedIn) {
+            setIsLoggedIn(false)
+            return <Navigate to="/home"/>;
+        }
+   
 
-    useEffect(() => {
-    }, [isLoggedIn])
-
-    if (isLoggedIn) {
-        setIsLoggedIn(false) 
-        return <Navigate to="/home" />;     
-    }
     return (
         <>
             <div className="min-h-screen flex items-center justify-center bg-gradient-to-tl to-pink-500 bg-opacity-50 py-12 px-4 sm:px-6 lg:px-8 flex-col gap-14">

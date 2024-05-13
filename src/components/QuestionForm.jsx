@@ -65,7 +65,7 @@ useEffect(() =>{
         // for(let i=0;i<formData.choices.length;i++){
         //     console.log(i);
         //         try {
-        //             const response = await axios.post(' https://capstone-c1-emmadeko10-3.onrender.com/api/assertion/add', { title, type, epreuveId, marks });
+        //             const response = await axios.post(' https://capstone-c1-emmadeko10-3.onrender.com/assertion/add', { title, type, epreuveId, marks });
         //             console.log(response.data); // Utilisez la réponse de l'API comme vous le souhaitez
         //             setQuestions((prevQuestions) => [...prevQuestions, formData]);
         //             // Réinitialisez le formulaire après l'envoi réussi si nécessaire
