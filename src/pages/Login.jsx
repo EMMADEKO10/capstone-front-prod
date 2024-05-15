@@ -13,7 +13,7 @@ import { Navigate } from 'react-router-dom';
 // Charger les variables d'environnement
 // dotenv.config();
 
-const apiUrl = "https://capstone-c1-emmadeko10-3.onrender.com";
+const apiUrl = "http://capstone-c1-emmadeko10-3.onrender.com";
 
 
 function Login() {
